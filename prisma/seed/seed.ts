@@ -31,20 +31,20 @@ async function main() {
   const cursos = await prisma.curso.createMany({
     data: [
       {
-        codigo: 'MAT101',
-        nome: 'Matemática Básica',
+        codigo: 'MAT',
+        nome: 'Matemática',
         descricao: 'Introdução à matemática elementar',
         adminId: admin.id,
       },
       {
-        codigo: 'FIS201',
-        nome: 'Física Geral',
+        codigo: 'FIS',
+        nome: 'Física',
         descricao: 'Conceitos básicos de física',
         adminId: admin.id,
       },
       {
-        codigo: 'PROG301',
-        nome: 'Programação I',
+        codigo: 'GEO',
+        nome: 'Geografia',
         descricao: 'Introdução à programação',
         adminId: admin.id,
       },
@@ -53,11 +53,34 @@ async function main() {
   });
   console.log(`${cursos.count} cursos criados`);
 
+  // Buscar os cursos criados
+  const cursoMat = await prisma.curso.findUnique({ where: { codigo: 'MAT' } });
+  const cursoFis = await prisma.curso.findUnique({ where: { codigo: 'FIS' } });
+  const cursoGeo = await prisma.curso.findUnique({ where: { codigo: 'GEO' } });
+
+  if (!cursoMat || !cursoFis || !cursoGeo) {
+    throw new Error('Um ou mais cursos não foram encontrados');
+  }
+
+  // Criação de disciplina com cursoId correto
+  const disciplina = await prisma.disciplina.create({
+    data: {
+      codigo: 'GEO001',
+      nome: 'Climatologia',
+      descricao: 'Definido pelo professor',
+      cargaHoraria: 66,
+      periodo: '2',
+      cursoId: cursoGeo.id,
+      adminId: admin.id,
+    }
+  });
+  console.log(`1 disciplina criada`);
+
   // Criação de Professores
   const professores = await prisma.professor.createMany({
     data: [
       {
-        matricula: 'PROF001',
+        matricula: '25P00001',
         nomeCompleto: 'Ana Silva',
         dataNascimento: new Date('1980-05-15'),
         especialidade: 'Matemática',
@@ -66,7 +89,7 @@ async function main() {
         adminId: admin.id,
       },
       {
-        matricula: 'PROF002',
+        matricula: '25P00002',
         nomeCompleto: 'Carlos Oliveira',
         dataNascimento: new Date('1975-11-22'),
         especialidade: 'Física',
@@ -79,23 +102,23 @@ async function main() {
   });
   console.log(`${professores.count} professores criados`);
 
-  // Criação de Alunos
+  // Criação de Alunos com cursoId correto
   const alunos = await prisma.aluno.createMany({
     data: [
       {
-        matricula: 'ALU001',
+        matricula: '25A00001',
         nomeCompleto: 'João Pereira',
         dataNascimento: new Date('2005-03-20'),
-        curso: 'Matemática Básica',
+        curso: cursoMat.id,
         email: 'joao.pereira@escola.com',
         password: await bcrypt.hash('defaultPassword1', 10),
         adminId: admin.id,
       },
       {
-        matricula: 'ALU002',
+        matricula: '25A00002',
         nomeCompleto: 'Maria Santos',
         dataNascimento: new Date('2006-07-12'),
-        curso: 'Programação I',
+        curso: cursoFis.id,
         email: 'maria.santos@escola.com',
         password: await bcrypt.hash('defaultPassword2', 10),
         adminId: admin.id,

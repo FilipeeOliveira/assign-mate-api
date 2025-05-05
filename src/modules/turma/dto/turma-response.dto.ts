@@ -15,15 +15,11 @@ export class TurmaResponseDto {
   semestre: string;
 
   @Expose()
-  @ApiProperty()
-  nome: string;
-
-  @Expose()
-  @ApiProperty({ enum: ['MANHA', 'TARDE', 'NOITE'] })
+  @ApiProperty({ enum: ['MATUTINO', 'VESPETINO', 'NOTURNO'] })
   turno: string;
 
   @Expose()
-  @ApiProperty({ enum: ['PRESENCIAL', 'EAD', 'SEMI_PRESENCIAL'] })
+  @ApiProperty({ enum: ['PRESENCIAL', 'EAD', 'HIBRIDO'] })
   modalidade: string;
 
   @Expose()

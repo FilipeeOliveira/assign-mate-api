@@ -13,10 +13,6 @@ export class CreateTurmaDto {
   @IsNotEmpty()
   semestre: string;
 
-  @ApiProperty({ example: 'Turma de Engenharia 2023' })
-  @IsString()
-  @IsNotEmpty()
-  nome: string;
 
   @ApiProperty({ enum: Turno })
   @IsEnum(Turno)
@@ -27,7 +23,6 @@ export class CreateTurmaDto {
   modalidade: Modalidade;
 
   @ApiProperty({ example: 1 })
-  @IsNumber()
   @IsNotEmpty()
   cursoId: string;
 }

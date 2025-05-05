@@ -16,7 +16,6 @@ export class TurmaService {
       data: {
         codigo: createTurmaDto.codigo,
         semestre: createTurmaDto.semestre,
-        nome: createTurmaDto.nome,
         turno: createTurmaDto.turno as Turno,
         modalidade: createTurmaDto.modalidade as Modalidade,
         curso: {
