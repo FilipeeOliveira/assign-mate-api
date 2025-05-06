@@ -45,6 +45,9 @@ export class DisciplinaService {
         orderBy: sort ? { [sort]: sortDir } : undefined,
         skip: (page - 1) * perPage,
         take: perPage,
+        include: {
+          curso: true,
+        },
       }),
     ]);
   
