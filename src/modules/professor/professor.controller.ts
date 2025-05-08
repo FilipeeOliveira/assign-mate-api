@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { 
   ApiBearerAuth, 
   ApiOperation, 
@@ -70,7 +70,7 @@ export class ProfessorController {
     status: 404, 
     description: 'Professor não encontrado'
   })
-  findOne(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  findOne(@Req() req, @Param('id') id: string) {
     return this.professorService.findOne(req.user.sub, id);
   }
 
@@ -114,7 +114,7 @@ export class ProfessorController {
     status: 404, 
     description: 'Professor não encontrado'
   })
-  remove(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  remove(@Req() req, @Param('id') id: string) {
     return this.professorService.remove(req.user.sub, id);
   }
 }

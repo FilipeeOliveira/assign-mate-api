@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -37,9 +37,9 @@ export class TurmaController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Detalhes da turma', description: 'Mostra detalhes de uma turma específica' })
+  @ApiOperation({ summary: 'Detalhes da turma', description: 'Buscar turma por ID' })
   @ApiResponse({ status: 200, description: 'Detalhes da turma', type: TurmaResponseDto })
-  findOne(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  findOne(@Req() req, @Param('id') id: string) {
     return this.turmaService.findOne(req.user.sub, id);
   }
 
@@ -48,7 +48,7 @@ export class TurmaController {
   @ApiResponse({ status: 200, description: 'Turma atualizada', type: TurmaResponseDto })
   update(
     @Req() req,
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Body() updateTurmaDto: UpdateTurmaDto
   ) {
     return this.turmaService.update(req.user.sub, id, updateTurmaDto);
@@ -57,7 +57,7 @@ export class TurmaController {
   @Delete(':id')
   @ApiOperation({ summary: 'Excluir turma', description: 'Remove permanentemente uma turma' })
   @ApiResponse({ status: 200, description: 'Turma excluída', type: TurmaResponseDto })
-  remove(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  remove(@Req() req, @Param('id') id: string) {
     return this.turmaService.remove(req.user.sub, id);
   }
 }

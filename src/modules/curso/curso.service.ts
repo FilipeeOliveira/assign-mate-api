@@ -3,7 +3,6 @@ import { UpdateCursoDto } from './dto/update-curso.dto';
 import { CreateCursoDto } from './dto/create-curso.dto';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { PaginationParams } from 'src/common/dto/pagination.dto';
-import { PaginatedResponseDto } from 'src/common/dto/paginated-response.dto';
 
 
 @Injectable()
@@ -33,6 +32,9 @@ export class CursoService {
         orderBy: sort ? { [sort]: sortDir } : undefined,
         skip: (page - 1) * perPage,
         take: perPage,
+        include:{
+         Disciplina: true,
+        }
       }),
     ]);
   

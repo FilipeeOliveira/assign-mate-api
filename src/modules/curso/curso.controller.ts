@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -42,7 +42,7 @@ export class CursoController {
   @ApiOperation({ summary: 'Buscar curso por ID', description: 'Retorna detalhes de um curso específico' })
   @ApiResponse({ status: 200, description: 'Curso encontrado', type: CursoResponseDto })
   @ApiResponse({ status: 404, description: 'Curso não encontrado' })
-  findOne(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  findOne(@Req() req, @Param('id') id: string) {
     return this.cursoService.findOne(req.user.sub, id);
   }
 
@@ -53,7 +53,7 @@ export class CursoController {
   @ApiResponse({ status: 409, description: 'Novo código já está em uso' })
   update(
     @Req() req,
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Body() updateCursoDto: UpdateCursoDto
   ) {
     return this.cursoService.update(req.user.sub, id, updateCursoDto);
@@ -63,7 +63,7 @@ export class CursoController {
   @ApiOperation({ summary: 'Excluir curso', description: 'Remove permanentemente um curso' })
   @ApiResponse({ status: 200, description: 'Curso excluído', type: CursoResponseDto })
   @ApiResponse({ status: 404, description: 'Curso não encontrado' })
-  remove(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  remove(@Req() req, @Param('id') id: string) {
     return this.cursoService.remove(req.user.sub, id);
   }
 }

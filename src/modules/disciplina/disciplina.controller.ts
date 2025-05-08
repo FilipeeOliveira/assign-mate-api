@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateDisciplinaDto } from './dto/create-disciplina.dto';
 import { UpdateDisciplinaDto } from './dto/update-disciplina.dto';
@@ -39,7 +39,7 @@ export class DisciplinaController {
   @Get(':id')
   @ApiOperation({ summary: 'Buscar disciplina por ID' })
   @ApiResponse({ status: 200, description: 'Disciplina encontrada', type: DisciplinaResponseDto })
-  findOne(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  findOne(@Req() req, @Param('id') id: string) {
     return this.disciplinaService.findOne(req.user.sub, id);
   }
 
@@ -48,7 +48,7 @@ export class DisciplinaController {
   @ApiResponse({ status: 200, description: 'Disciplina atualizada', type: DisciplinaResponseDto })
   update(
     @Req() req,
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Body() updateDisciplinaDto: UpdateDisciplinaDto
   ) {
     return this.disciplinaService.update(req.user.sub, id, updateDisciplinaDto);
@@ -57,7 +57,7 @@ export class DisciplinaController {
   @Delete(':id')
   @ApiOperation({ summary: 'Excluir disciplina' })
   @ApiResponse({ status: 200, description: 'Disciplina excluída', type: DisciplinaResponseDto })
-  remove(@Req() req, @Param('id', ParseIntPipe) id: string) {
+  remove(@Req() req, @Param('id') id: string) {
     return this.disciplinaService.remove(req.user.sub, id);
   }
 }
