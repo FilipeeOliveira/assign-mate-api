@@ -88,7 +88,7 @@ model Disciplina {
 enum Turno {
   MATUTINO 
   VESPERTINO
-  NORTURNO
+  NOTURNO
 }
 
 enum Modalidade {
